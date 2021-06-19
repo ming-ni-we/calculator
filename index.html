@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>百宝箱</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="css/mdb.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark indigo fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/index.html">首页</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="数学" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">数学
+                <span class="sr-only">(current)</span>
+              </a>
+              <div class="dropdown-menu dropdown-primary" aria-labelledby="数学">
+                <a class="dropdown-item" href="#juzheng">行列式值计算</a>
+                <a class="dropdown-item" href="#huigui">回归方程</a>
+                <a class="dropdown-item" href="#dianchuixian">点垂线计算</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="工具" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">工具</a>
+              <div class="dropdown-menu dropdown-primary" aria-labelledby="工具">
+                <a class="dropdown-item" href="/index_choujiang.html">抽奖</a>
+                <a class="dropdown-item" href="/index_choujiang.html">在线随机数生成器</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="/jieyebaogao.html">结业报告</a>
+            </li>
+          </ul>
+
+          <form class="form-inline">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <hr>
+  <section id="juzheng" class="text-center mx-lg-5 my-5">
+    <div class="card">
+      <h2 class="my-4">行列式计算</h2>
+      <div class="my-2">
+        <label>请输入行列式|A|的N值</label>
+        <input id="NValue" name="N" value="2"></input>
+      </div>
+      <div class="my-2">
+        <tr>
+          <td>请按|A|顺序输入，以单个空格分隔每个数字：<br></td>
+          <td><textarea name="reworkmes" cols="40" rows="10" style="OVERFLOW:   hidden" id="hls">1 2
+4 5</textarea></td>
+        </tr>
+      </div>
+      <div class="contaner">
+        <button type="button" class="btn btn-indigo my-1" onclick="hlsValue()">计算</button>
+        <div class="row">
+          <div class="my-2 col-md-4"></div>
+          <div class="my-2 col-md-2">行列式|A|的值为：</div>
+          <div class="col-md-2" id="anwser">-3</div>
+        </div>
+      </div>
+      <script>
+        function hlsValue() {
+          var n = Number(document.getElementById("NValue").value)
+          var hls = document.getElementById("hls").value
+          x = hls.split('\n')
+          var squer = new Array();
+          for (i = 0; i < n; i++) {
+            squer[i] = new Array();
+            for (j = 0; j < n; j++) {
+              squer[i][j] = i + j;
+            }
+          }
+          var i = 0, j = 0, chage = 1;
+          for (let index = 0; index < x.length; index++) {
+            const element = x[index].split(' ');
+            for (let k = 0; k < element.length; k++) {
+              var temp = element[k];
+              squer[i][j] = temp;
+              j++;
+              if (j == n) {
+                j = 0;
+                i++;
+              }
+            }
+          }
+          for (let i = 1; i < n; i++) {
+            for (let j = i; j < n; j++) {
+              var store = 0;
+              if (squer[i - 1][i - 1] == 0) {
+                for (let k = j + 1; k < n; k++) {
+                  if (squer[k][i - 1] != 0) {
+                    var t;
+                    for (let m = 0; m < n; m++) {
+                      t = squer[i - 1][m];
+                      squer[i - 1][m] = squer[k][m];
+                      squer[k][m] = t;
+                    }
+                    chage *= -1;
+                    break;
+                  }
+                }
+              }
+              store = squer[j][i - 1] / squer[i - 1][i - 1];
+              for (let k = i - 1; k < n; k++) {
+                squer[j][k] -= squer[i - 1][k] * store;
+              }
+            }
+          }//化为上三角
+          var sum = 1;
+          for (let i = 0; i < n; i++) {
+            sum *= squer[i][i];
+          }//计算值
+          sum = sum * chage;
+          var an = document.getElementById("anwser");
+          an.innerHTML = sum;
+        }
+      </script>
+    </div>
+  </section>
+
+  <section id="huigui" class="text-center mx-lg-5 my-5">
+    <div class="card">
+      <h2>线性回归方程(最小二乘法)</h2>
+      <div class="my-2">
+        <tr>
+          <td>值x，以单个空格分隔每个数字：<br></td>
+          <td><textarea name="reworkmes" cols="40" rows="10" style="OVERFLOW:   hidden"
+              id="xxhg-x">5 20 40 80 100</textarea></td>
+        </tr>
+      </div>
+      <div class="my-2">
+        <tr>
+          <td>值y，以单个空格分隔每个数字：<br></td>
+          <td><textarea name="reworkmes" cols="40" rows="10" style="OVERFLOW:   hidden"
+              id="xxhg-y">5 20 40 80 100</textarea></td>
+        </tr>
+      </div>
+      <div class="contaner">
+        <button type="button" class="btn btn-indigo my-1" onclick="huiguijisuan()">计算</button>
+        <div class="row">
+          <div class="my-2 col-md-4"></div>
+          <div class="my-2 col-md-2">斜率：</div>
+          <div class="col-md-2" id="xielv">1</div>
+        </div>
+        <div class="row">
+          <div class="my-2 col-md-4"></div>
+          <div class="my-2 col-md-2">x平均值：</div>
+          <div class="col-md-2" id="x_pingju">49</div>
+        </div>
+        <div class="row">
+          <div class="my-2 col-md-4"></div>
+          <div class="my-2 col-md-2">y平均值：</div>
+          <div class="col-md-2" id="y_pingju">49</div>
+        </div>
+        <div class="row">
+          <div class="my-2 col-md-4"></div>
+          <div class="my-2 col-md-2">截距：</div>
+          <div class="col-md-2" id="jieju">0</div>
+        </div>
+        <div class="row">
+          <div class="my-2 col-md-4"></div>
+          <div class="my-2 col-md-2">线性回归方程Y=</div>
+          <div class="col-md-2" id="fangcheng">0 + 1 x</div>
+        </div>
+      </div>
+      <script>
+        function huiguijisuan() {
+          var x = document.getElementById("xxhg-x").value.split(' ');
+          var y = document.getElementById("xxhg-y").value.split(' ');
+          var retux = new Array();
+          var retuy = new Array();
+          for (let i = 0; i < x.length; i++) {
+            retux[i] = Number(x[i]);
+            retuy[i] = Number(y[i]);
+          }
+          var x_ping = 0, y_ping = 0;
+          for (let i = 0; i < retux.length; i++) {
+            x_ping += retux[i];
+            y_ping += retuy[i];
+          }
+          x_ping = x_ping / retux.length;
+          y_ping = y_ping / retuy.length;
+          x_ping = x_ping.toFixed(2);
+          y_ping = y_ping.toFixed(2);
+          var a, b, sumup = 0, sumdowm = 0;
+          for (let i = 0; i < retux.length; i++) {
+            sumup += retux[i] * retuy[i];
+            sumdowm += retux[i] ** 2;
+          };
+          b = (sumup - retux.length * x_ping * y_ping) / (sumdowm - retux.length * x_ping * x_ping);
+          a = y_ping - b * x_ping;
+          var an = document.getElementById("xielv");
+          an.innerHTML = b.toFixed(2);
+          var an = document.getElementById("x_pingju");
+          an.innerHTML = x_ping;
+          var an = document.getElementById("y_pingju");
+          an.innerHTML = y_ping;
+          var an = document.getElementById("jieju");
+          an.innerHTML = a.toFixed(2);
+          var an = document.getElementById("fangcheng");
+          an.innerHTML = a.toFixed(2) + " + " + b.toFixed(2) + " x";
+        }
+      </script>
+    </div>
+  </section>
+
+  <section id="dianchuixian" class="text-center mx-lg-5 my-5">
+    <div class="card">
+      <h2 class="my-4">直线的垂线方程计算器（点垂线）</h2>
+
+      <div class="container">
+        <!--Grid row 1-->
+        <div class="row">
+          <div class="col-lg-2 col-md-12 mb-4">
+            直线方程
+          </div>
+          <div class="col-lg-2 col-md-2 mb-4">
+            <input id="xishu_x">
+          </div>
+          <div class="col-lg-2 col-md-2 mb-4">
+            x +
+          </div>
+          <div class="col-lg-2 col-md-2 mb-4">
+            <input id="xishu_y">
+          </div>
+          <div class="col-lg-2 col-md-2 mb-4">
+            y =
+          </div>
+          <div class="col-lg-2 col-md-2 mb-4">
+            <input id="xishu_c">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-3 mb-4">
+            点：
+          </div>
+          <div class="col-lg-3 col-md-3 mb-4">
+            <input id="dian_x">
+          </div>
+          <div class="col-lg-3 col-md-3 mb-4">
+            ,
+          </div>
+          <div class="col-lg-3 col-md-3 mb-4">
+            <input id="dian_y">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 mb-4">
+            <input type="button" id="randomGenerate" value="计算" class="btn btn-indigo my-1" onclick="dianchuixian_jisuan()">
+          </div>
+          <div class="col-lg-4 col-md-4 mb-4">
+            <input type="button" id="randomGenerate" value="清除" class="btn btn-indigo my-1" onclick="dianchuixian_qingchu()">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 mb-4">
+            垂线方程 :
+          </div>
+          <div class="col-lg-4 col-md-4 mb-4">
+            <p id="chuixian"></p>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        function dianchuixian_jisuan(){
+          var a=document.getElementById("xishu_x").value;
+          var b=document.getElementById("xishu_y").value;
+          var c=document.getElementById("xishu_c").value;
+          var x1=document.getElementById("dian_x").value;
+          var y1=document.getElementById("dian_y").value;
+
+          var k1=a/b;
+          var k2=1/k1;
+          var b2=y1-k2*x1;
+          console.log(k2,b2);
+          var an = document.getElementById("chuixian");
+          an.innerHTML = "y = " + k2.toFixed(2) + " x + " + b2.toFixed(2) ;
+        }
+        function dianchuixian_qingchu(){
+          document.getElementById("xishu_x").value='';
+          document.getElementById("xishu_y").value='';
+          document.getElementById("xishu_c").value='';
+          document.getElementById("dian_x").value='';
+          document.getElementById("dian_y").value='';
+        }
+      </script>
+  </section>
+  
+  <footer class="page-footer indigo pt-4 mt-4">
+
+  </footer>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Your custom scripts (optional) -->
+  <script type="text/javascript"></script>
+
+</body>
+
+</html>

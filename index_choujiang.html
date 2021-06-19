@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>百宝箱</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="/random.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark indigo fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="/index.html">首页</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                    aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="basicExampleNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="数学" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">数学
+                                <span class="sr-only">(current)</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="数学">
+                                <a class="dropdown-item" href="/index.html">行列式值计算</a>
+                                <a class="dropdown-item" href="/index.html">回归方程</a>
+                                <a class="dropdown-item" href="/index.html">点垂线计算</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="工具" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">工具</a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="工具">
+                                <a class="dropdown-item" href="#choujiang">抽奖</a>
+                                <a class="dropdown-item" href="#suijishu">在线随机数生成器</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="报告" href="/jieyebaogao.html">结业报告</a>
+                        </li>
+                    </ul>
+
+                    <form class="form-inline">
+                        <div class="md-form my-0">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <hr>
+    <section id="choujiang" class="text-center mx-lg-5 my-5">
+        <div class="card">
+            <h2 class="my-3">在线抽奖</h2>
+            <h2 class="my-3">-------</h2>
+            <div class="continer">
+                <button type="button " class="btn btn-indigo my-2 " onclick="choujiang()">开始抽奖</button>
+                <div class="row">
+                    <div class="my-2 col-md-6">
+                        <tr>
+                            <td>抽奖名单：(每个抽奖者换行隔开)<br></td>
+                            <td><textarea name="reworkmes" cols="40" rows="10" style="OVERFLOW:   hidden"
+                                    id="choujiang_list"></textarea></td>
+                        </tr>
+                    </div>
+                    <div class="my-2 col-md-6">
+                        <tr>
+                            <td>中奖名单：<br></td>
+                            <td><textarea name="reworkmes" cols="40" rows="10" style="OVERFLOW:   hidden"
+                                    id="zhongjiang_list"></textarea></td>
+                        </tr>
+                    </div>
+                    <div class="my-2 col-md-6">
+                        <button type="button " class="btn btn-indigo my-2 " onclick="qingkong_L()">清空</button>
+                    </div>
+                    <div class="my-2 col-md-6">
+                        <button type="button " class="btn btn-indigo my-2 " onclick="qingkong_R()">清空</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function randomNum(minNum, maxNum) {//生成从minNum到maxNum的随机数
+                switch (arguments.length) {
+                    case 1:
+                        return parseInt(Math.random() * minNum + 1, 10);
+                        break;
+                    case 2:
+                        return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                        break;
+                    default:
+                        return 0;
+                        break;
+                }
+            }
+            var shengXiaMingDan = new Array();
+            var chouDaoMingDan = new Array();
+            function choujiang() {
+                var s = document.getElementById("choujiang_list").value.split('\n');
+                shengXiaMingDan = s;
+                for (let i = 0; i < chouDaoMingDan.length; i++) {
+                    for (let j = 0; j < shengXiaMingDan.length; j++) {
+                        if (shengXiaMingDan[j] == chouDaoMingDan[i]) {
+                            shengXiaMingDan.splice(j, 1);
+                            j--;
+                        }
+                    }
+                }
+                var n = Number(randomNum(0, shengXiaMingDan.length - 1));
+                chouDaoMingDan[chouDaoMingDan.length] = shengXiaMingDan[n];
+                if (shengXiaMingDan[n] != null) {
+                    var an = document.getElementById("zhongjiang_list");
+                    var ann = document.getElementById("zhongjiang_list").value;
+                    if (ann == "") {
+                        an.innerHTML = shengXiaMingDan[n];
+                    }
+                    else
+                        an.innerHTML = ann + '\n' + shengXiaMingDan[n];
+                }
+            };
+            function qingkong_L() {
+                var xx = document.getElementById("zhongjiang_list");
+                xx.innerHTML = "";
+                shengXiaMingDan = [];
+                chouDaoMingDan = [];
+                var sss = document.getElementById("choujiang_list");
+                sss.innerHTML = "";
+            }
+            function qingkong_R() {
+                var s = document.getElementById("zhongjiang_list");
+                s.innerHTML = "";
+                chouDaoMingDan = [];
+            }
+        </script>
+    </section>
+    <section id="suijishu" class="text-center mx-lg-5 my-5">
+        <div class="card">
+            <h2 class="my-2">在线随机数生成器<br></h2>
+            <div class="mathmod_form">
+                确定产生随机数的数目，最小值和最大值：<br><br>
+                数目：<span style="margin-left:14px"></span><input type="text" id="randomCount" value="10"><br><br>
+                最小值：<input type="text" id="randomMinimum" value="0"> 最大值：<input type="text" id="randomMaximum"
+                    value="100"><br><br>
+                选择是否为唯一随机数：<br><br>
+                选择：<span style="margin-left:14px"></span><select id="randomType">
+                    <option value="unique">唯一</option>
+                    <option value="open">随便</option>
+                </select><br><br>
+                点击生成产生随机数：<br><br>
+                <input type="button" id="randomGenerate" value="生成" class="btn btn-indigo my-1" onclick="suiji()">
+                得到你想要的随机数！<br><br>
+                <div id="randomNumbers"
+                    style="color: white;width:100%;line-height:36px;font-size: 28px;text-align: left;background-color: #3F51B5;border-radius:3px; padding:5px;">
+                    结果显示在这里！</div>
+                <script type="text/javascript">
+                    function suiji() {
+                        var test_1 = document.getElementById('randomCount').value;
+                        var test_2 = document.getElementById('randomMinimum').value;
+                        var test_3 = document.getElementById('randomMaximum').value;
+                        var mTwister = new MersenneTwister();
+                        var randomNumbers = new Array();
+                        for (var i = 0; i < parseInt($('#randomCount').val()); i++) {
+                            var number = (Math.round(mTwister.random() * (parseInt(test_3) - parseInt(test_2))) + parseInt(test_2));
+                            var found = false;
+                            for (var j = 0; j < randomNumbers.length; j++
+                            ) {
+                                if (randomNumbers[j] == number) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found == true && $('#randomType').val() == 'unique') {
+                                i--;
+                            } else {
+                                randomNumbers[i] = number;
+                            }
+                        }
+                        $('#randomNumbers').html('');
+                        for (var i = 0; i < randomNumbers.length; i++
+                        ) {
+                            $('#randomNumbers').html($('#randomNumbers').html() + (i == 0 ? '' : ' ') + '<b>' + randomNumbers[i] + '</b>');
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer indigo pt-4 mt-4">
+
+    </footer>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Your custom scripts (optional) -->
+    <script type="text/javascript"></script>
+
+</body>
+
+</html>
