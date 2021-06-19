@@ -1,0 +1,22 @@
+/*可自行添加td单元格背景色   wpy begin*/
+.handsontable td.area-pink{
+	text-align: center;
+	vertical-align: middle;
+	background-color:pink;
+}
+.handsontable td.area-noColor{
+	text-align: center;
+	vertical-align: middle;
+}
+.handsontable td.area-yellow{
+	text-align: center;
+	vertical-align: middle;
+	background-color:yellow;
+}
+/*wpy end*/
+ 
+/* 默认只读单元格背景色#777，可自行更改 */
+.handsontable .htDimmed {
+  /* color: #777; */
+  color: #000;
+}
